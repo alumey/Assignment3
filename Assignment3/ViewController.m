@@ -42,11 +42,7 @@
     }else{
         [_fillCart setEnabled:YES];
     }
-    if ([_cart count] < 1 ) {
-        [_clearCart setEnabled:YES];
-    }else{
-        [_clearCart setEnabled:NO];
-    }
+
     
 }
 
@@ -109,6 +105,9 @@
 
 -(int) tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
+    if([_cart count] == 0){
+        return 1;
+    }
     return [_cart count];
 }
 
@@ -122,8 +121,13 @@
     if([_cart count] == 0){
         cell.textLabel.text = @"No Fruit in Cart";
         cell.detailTextLabel.text = @"";
-        
-    } else {
+        [_clearCart setEnabled:NO];
+        [_fillCart setEnabled:YES];
+        [_selectAll setEnabled:NO];
+         }else {
+        [_clearCart setEnabled:YES];
+        [_fillCart setEnabled:NO];
+        [_selectAll setEnabled:YES];
         Fruit * tempFruit = [_cart objectAtIndex:indexPath.row];
         
         cell.textLabel.text = [tempFruit name];
